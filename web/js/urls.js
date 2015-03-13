@@ -1,0 +1,1 @@
+GETCAPTCHA_URL	= "ajax/recargar-imagen.php";
