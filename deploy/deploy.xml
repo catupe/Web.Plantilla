@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Web.Plantilla" default="deploy" basedir=".">
+	
+	<tstamp>
+    	<format pattern="yyyyMMdd" property="FECHA"></format>   
+   	</tstamp>
+	<property file="deploy.properties"/>
+
+	<target name="clean">
+		<delete file="../${deploy.dir.local}/${FECHA}.${deploy.archivo}" />
+	</target>
+	<target name="build" depends="clean">
+		<!--
+		<zip destfile="../${deploy.dir.local}/${FECHA}.${deploy.archivo}" 
+			 basedir="../${deploy.dir.local}/${deploy.aplicacion}"
+			 excludes="deploy/**"/>
+		-->
+		<zip destfile="../${deploy.dir.local}/${FECHA}.${deploy.archivo}">
+			
+			<zipfileset dir="../${deploy.dir.local}/${deploy.aplicacion}">
+				<exclude name="deploy/**"/>	
+			</zipfileset>
+			
+			<!-- con esto se agrega la carpeta lib del nucleo -->
+			<zipfileset dir="../${deploy.dir.local}/${deploy.nucleo}/coso" prefix="lib" />
+			
+		</zip>
+    </target>
+	
+	<target name="deploy" depends="build">
+		<!--
+		<scp
+			file="../${deploy.dir.local}/${FECHA}.${deploy.archivo}" 
+			todir="${deploy.usuario}@${deploy.host}:${deploy.dir.remoto}/${deploy.dir.respaldo.zip}"
+			password="${deploy.password}"
+			verbose = "true"
+			trust="true"
+		/>
+		<sshexec
+			host="${deploy.host}" 
+			username="${deploy.usuario}"
+			password="${deploy.password}"
+			trust = "true"
+			verbose = "true"
+			command = "rm -rf /${deploy.dir.remoto}/${deploy.aplicacion}"
+		/>
+		<sshexec
+			host="${deploy.host}" 
+			username="${deploy.usuario}"
+			password="${deploy.password}"
+			trust = "true"
+			verbose = "true"
+			command = "rm -rf /${deploy.dir.remoto}/${deploy.aplicacion}.${deploy.ambiente}"
+		/>
+		<sshexec
+			host="${deploy.host}" 
+			username="${deploy.usuario}"
+			password="${deploy.password}"
+			trust = "true"
+			verbose = "true"
+			command = "unzip /${deploy.dir.remoto}/${deploy.dir.respaldo.zip}/${FECHA}.${deploy.archivo} -d /${deploy.dir.remoto}/${deploy.aplicacion}"
+		/>
+		<sshexec
+			host="${deploy.host}" 
+			username="${deploy.usuario}"
+			password="${deploy.password}"
+			trust = "true"
+			verbose = "true"
+			command = "/${deploy.dir.remoto}/script.deploy ${deploy.ambiente}"
+		/>
+		-->
+		<echo message="${deploy.dir.remoto}/${script.registro.deploy}"/>
+		<sshexec
+			host="${deploy.host}" 
+			username="${deploy.usuario}"
+			password="${deploy.password}"
+			trust = "true"
+			verbose = "true"
+			command = "${deploy.dir.remoto}/${script.registro.deploy} ${deploy.ambiente} ${deploy.registrarDeploy} ${deploy.aplicacion} ${deploy.nucleo}"
+		/>
+	</target>
+
+</project>

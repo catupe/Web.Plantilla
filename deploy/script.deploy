@@ -1,0 +1,28 @@
+#!/bin/bash
+
+AMBIENTE=$1
+RUTA=/data/www/prueba/
+
+echo "inicio...";
+if [ "$AMBIENTE" == "" ]; then
+	echo "ERROR :: debe ingresar el ambiente (desarrollo - implementacion - produccion)"
+	echo "fin."
+	exit
+fi
+
+if  [ "$AMBIENTE" != "desarrollo" ] && [ "$AMBIENTE" != "produccion" ] && [ "$AMBIENTE" != "implementacion" ]; then
+	echo "ERROR :: error al ingresar el ambiente (desarrollo - implementacion - produccion)"
+	echo "fin...\n"
+    exit
+fi
+
+cp -R $RUTA/garino.homero $RUTA/garino.homero.$AMBIENTE
+
+mv $RUTA/garino.homero.$AMBIENTE/public/index.php $RUTA/garino.homero.$AMBIENTE/public/index.implementacion.php
+mv $RUTA/garino.homero.$AMBIENTE/public/index.$AMBIENTE.php $RUTA/garino.homero.$AMBIENTE/public/index.php
+
+chown apache:apache -R $RUTA/garino.homero.$AMBIENTE/data/
+
+#echo "creando el link...\n";
+#ln -s $RUTA/garino.homero.$AMBIENTE/public/ $AMBIENTE
+echo "fin...\n";
