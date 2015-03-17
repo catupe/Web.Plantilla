@@ -76,7 +76,7 @@
 			password="${deploy.password}"
 			trust = "true"
 			verbose = "true"
-			command = "${deploy.dir.remoto}/${script.registro.deploy} ${deploy.ambiente} ${deploy.registrarDeploy} ${deploy.aplicacion} ${deploy.nucleo}"
+			command = "${deploy.dir.remoto}/${script.registro.deploy} ${deploy.registrarDeploy} ${deploy.ambiente} ${deploy.aplicacion} ${deploy.nucleo}"
 		/>
 	</target>
 
