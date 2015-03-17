@@ -79,5 +79,5 @@
 			command = "${deploy.dir.remoto}/${script.registro.deploy} ${deploy.registrarDeploy} ${deploy.ambiente} ${deploy.aplicacion} ${deploy.nucleo}"
 		/>
 	</target>
-	<!-- tag 4.0 -->
+	<!-- head -->
 </project>
